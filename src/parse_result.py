@@ -37,7 +37,7 @@ class FileVisitor:
             vectors = reader.__next__()
             results = []
             for row in reader:
-                results.append(row)
+                results.extend(row)
         return results
             
     def visit_prn(self, component: ResultFile) -> List[float]:
@@ -48,7 +48,7 @@ class FileVisitor:
             results = []
             drop_index = "Index" in vectors
             for line in lines:
-                results.append([float(pt) for pt in line.split()[int(drop_index):]])
+                results.extend([float(pt) for pt in line.split()[int(drop_index):]])
             return results
         
     def visit_csd(self, component: ResultFile) -> List[float]:
@@ -72,5 +72,5 @@ class FileVisitor:
                     # Every data point is given as <data>:<column #>, trim off 
                     # the column numbers
                     points = [float(x.split(":")[0]) for x in line.split()]
-                    results.append(points)
+                    results.extend(points)
             return results
